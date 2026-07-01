@@ -1,16 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const ROWS = [
+	{ label: 'Building', value: 'Helix retrieval engine + a small eval harness' },
+	{ label: 'Reading', value: 'Designing Data-Intensive Applications (again)' },
+	{ label: 'Focus', value: 'Retrieval quality, latency, and evals' },
+	{ label: 'Based in', value: 'Kathmandu — open to remote' },
+];
 ---
 
 <Base title="Now — Anuj Mali">
-	<main style="min-height:100vh; display:flex; align-items:center; padding:88px 44px;">
+	<main style="min-height:100vh; padding:88px 44px 96px;">
 		<div style="max-width:860px; margin:0 auto;">
 			<div style="display:flex; align-items:center; gap:11px; margin-bottom:10px;">
 				<span style="width:9px; height:9px; border-radius:50%; background:#39d3c4; box-shadow:0 0 12px #39d3c4; flex:none;"></span>
 				<h1 transition:name="node-now" style="margin:0; font-size:34px; font-weight:600; letter-spacing:-.5px; color:#eef1f5;">Now</h1>
 			</div>
-			<p style="margin:0 0 8px; font-size:11.5px; letter-spacing:.5px; text-transform:uppercase; color:#5f6a79;">Updated July 2026</p>
-			<p style="margin:0; font-size:16px; line-height:1.7; color:#b6bdc8; max-width:600px;">What I'm building, reading, and focused on right now.</p>
+			<p style="margin:0 0 30px; font-size:11.5px; letter-spacing:.5px; text-transform:uppercase; color:#5f6a79;">Updated July 2026</p>
+			<p style="margin:0 0 36px; font-size:16px; line-height:1.7; color:#b6bdc8; max-width:600px;">Building Helix, a hybrid retrieval engine I'm pushing toward open source. Most of my week splits between latency work and eval tooling — the unglamorous parts that decide whether a system survives production.</p>
+
+			<div style="display:grid; grid-template-columns:120px 1fr; gap:16px 24px; max-width:560px;">
+				{ROWS.map((row) => (
+					<>
+						<div style="font-size:13px; color:#5f6a79; letter-spacing:.3px;">{row.label}</div>
+						<div style="font-size:14.5px; color:#cbd1da;">{row.value}</div>
+					</>
+				))}
+			</div>
 		</div>
 	</main>
 </Base>

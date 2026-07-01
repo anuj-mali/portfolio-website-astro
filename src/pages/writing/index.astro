@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+---
+
+<Base title="Writing — Anuj Mali">
+	<main style="min-height:100vh; padding:88px 44px 96px;">
+		<div style="max-width:860px; margin:0 auto;">
+			<div style="display:flex; align-items:center; gap:11px; margin-bottom:10px;">
+				<span style="width:9px; height:9px; border-radius:50%; background:#39d3c4; box-shadow:0 0 12px #39d3c4; flex:none;"></span>
+				<h1 transition:name="node-writing" style="margin:0; font-size:34px; font-weight:600; letter-spacing:-.5px; color:#eef1f5;">Writing</h1>
+			</div>
+			<p style="margin:0 0 42px; font-size:15px; line-height:1.6; color:#828c9b; max-width:560px;">Notes on retrieval, agents, and shipping LLM systems that survive contact with production.</p>
+
+			<div>
+				{posts.map((post, i) => (
+					<a
+						href={`/writing/${post.id}/`}
+						class="post-row"
+						style={`display:block; text-decoration:none; padding:22px 4px; border-top:1px solid rgba(255,255,255,.07); ${i === posts.length - 1 ? 'border-bottom:1px solid rgba(255,255,255,.07);' : ''} cursor:pointer; transition:padding .25s ease;`}
+					>
+						<div style="font-size:17.5px; font-weight:540; color:#e8edf3; letter-spacing:-.2px;">{post.data.title}</div>
+						<div style="font-size:13.5px; color:#7c8694; margin-top:6px; line-height:1.5;">{post.data.description}</div>
+						<div style="font-size:11.5px; color:#5f6a79; margin-top:9px; letter-spacing:.4px; font-variant-numeric:tabular-nums;">{dateFmt(post.data.pubDate)}</div>
+					</a>
+				))}
+			</div>
+		</div>
+	</main>
+
+	<style>
+		.post-row:hover { padding-left: 14px; }
+	</style>
+</Base>

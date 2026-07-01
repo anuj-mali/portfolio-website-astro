@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('writing', ({ data }) => !data.draft);
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+
+<Base title={`${post.data.title} — Anuj Mali`}>
+	<main style="min-height:100vh; padding:88px 44px 96px;">
+		<article style="max-width:720px; margin:0 auto;">
+			<a href="/writing/" style="font-size:13px; color:#7c8694; text-decoration:none;">&larr; Writing</a>
+
+			<h1 style="margin:22px 0 12px; font-size:32px; font-weight:600; letter-spacing:-.5px; color:#eef1f5; line-height:1.25;">{post.data.title}</h1>
+
+			<div style="font-size:12.5px; color:#5f6a79; letter-spacing:.4px; font-variant-numeric:tabular-nums; margin-bottom:8px;">
+				{dateFmt(post.data.pubDate)}
+				{post.data.updatedDate && <> &middot; updated {dateFmt(post.data.updatedDate)}</>}
+			</div>
+
+			{post.data.tags.length > 0 && (
+				<div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:34px;">
+					{post.data.tags.map((tag) => (
+						<span style="font-size:11.5px; color:#7c8694; padding:3px 9px; border:1px solid rgba(255,255,255,.1); border-radius:999px;">{tag}</span>
+					))}
+				</div>
+			)}
+
+			<div class="prose" style="color:#c8cfd9; font-size:16px; line-height:1.75;">
+				<Content />
+			</div>
+
+			{(post.data.devtoUrl || post.data.hashnodeUrl) && (
+				<div style="margin-top:56px; padding-top:24px; border-top:1px solid rgba(255,255,255,.07); font-size:13.5px; color:#7c8694;">
+					Also published on:
+					{post.data.devtoUrl && <a href={post.data.devtoUrl} style="color:#39d3c4; margin-left:8px;">Dev.to</a>}
+					{post.data.hashnodeUrl && <a href={post.data.hashnodeUrl} style="color:#39d3c4; margin-left:8px;">Hashnode</a>}
+				</div>
+			)}
+		</article>
+	</main>
+
+	<style>
+		.prose :global(h2) { font-size: 22px; font-weight: 600; color: #e8edf3; margin: 40px 0 14px; }
+		.prose :global(h3) { font-size: 18px; font-weight: 600; color: #e8edf3; margin: 32px 0 12px; }
+		.prose :global(p) { margin: 0 0 18px; }
+		.prose :global(a) { color: #39d3c4; }
+		.prose :global(code) { background: rgba(255,255,255,.06); padding: 2px 6px; border-radius: 4px; font-size: .9em; }
+		.prose :global(pre) { background: rgba(255,255,255,.04); padding: 16px; border-radius: 8px; overflow-x: auto; }
+		.prose :global(ul), .prose :global(ol) { padding-left: 22px; margin: 0 0 18px; }
+	</style>
+</Base>

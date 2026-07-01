@@ -1,15 +1,49 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const PROJECTS = [
+	{ name: 'Helix', year: '2026', desc: 'Hybrid retrieval engine — BM25, dense vectors, and cross-encoder reranking served under 200ms.', tags: ['Rust', 'pgvector', 'Python'] },
+	{ name: 'Conductor', year: '2026', desc: 'Multi-agent orchestration runtime with durable state and fully replayable runs.', tags: ['TypeScript', 'Redis'] },
+	{ name: 'Assay', year: '2025', desc: 'LLM evaluation harness tracking regressions across prompt and model versions.', tags: ['Python', 'Postgres'] },
+	{ name: 'Sift', year: '2025', desc: 'Streaming ingestion and structure-aware chunking for messy document corpora.', tags: ['Go', 'Kafka'] },
+	{ name: 'Relay', year: '2025', desc: 'Inference gateway handling routing, batching, and token streaming across providers.', tags: ['Rust', 'gRPC'] },
+	{ name: 'Atlas', year: '2024', desc: 'Semantic search over 2M internal documents with hybrid recall and inline citations.', tags: ['Python', 'Qdrant'] },
+];
 ---
 
 <Base title="Projects — Anuj Mali">
-	<main style="min-height:100vh; display:flex; align-items:center; padding:88px 44px;">
+	<main style="min-height:100vh; padding:88px 44px 96px;">
 		<div style="max-width:860px; margin:0 auto;">
 			<div style="display:flex; align-items:center; gap:11px; margin-bottom:10px;">
 				<span style="width:9px; height:9px; border-radius:50%; background:#39d3c4; box-shadow:0 0 12px #39d3c4; flex:none;"></span>
 				<h1 transition:name="node-projects" style="margin:0; font-size:34px; font-weight:600; letter-spacing:-.5px; color:#eef1f5;">Projects</h1>
 			</div>
-			<p style="margin:0; font-size:15px; line-height:1.6; color:#828c9b; max-width:560px;">Systems I've designed and shipped — retrieval, orchestration, and the infrastructure around them.</p>
+			<p style="margin:0 0 38px; font-size:15px; line-height:1.6; color:#828c9b; max-width:560px;">Systems I've designed and shipped — retrieval, orchestration, and the infrastructure around them.</p>
+
+			<div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px;">
+				{PROJECTS.map((p) => (
+					<div class="project-card" style="border:1px solid rgba(255,255,255,.08); border-radius:13px; padding:22px; background:rgba(255,255,255,.018); transition:border-color .25s ease, transform .25s ease, background .25s ease;">
+						<div style="display:flex; align-items:baseline; justify-content:space-between;">
+							<div style="font-size:18px; font-weight:600; color:#eef1f5; letter-spacing:-.2px;">{p.name}</div>
+							<div style="font-size:11px; color:#5f6a79; font-variant-numeric:tabular-nums;">{p.year}</div>
+						</div>
+						<div style="font-size:13.5px; line-height:1.55; color:#8b95a4; margin-top:10px;">{p.desc}</div>
+						<div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:16px;">
+							{p.tags.map((tag) => (
+								<span style="font-size:11px; color:#9aa3b1; padding:3px 9px; border:1px solid rgba(255,255,255,.1); border-radius:6px; letter-spacing:.3px;">{tag}</span>
+							))}
+						</div>
+					</div>
+				))}
+			</div>
 		</div>
 	</main>
+
+	<style>
+		.project-card:hover {
+			border-color: color-mix(in srgb, #39d3c4 45%, transparent);
+			transform: translateY(-2px);
+			background: rgba(255, 255, 255, 0.03);
+		}
+	</style>
 </Base>

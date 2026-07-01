@@ -1,15 +1,32 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const ROWS = [
+	{ label: 'Editor & shell', value: 'Neovim · tmux · Ghostty · Fish' },
+	{ label: 'Languages', value: 'Python · Rust · Go · TypeScript' },
+	{ label: 'Data & infra', value: 'Postgres + pgvector · Qdrant · Kafka · Docker · AWS' },
+	{ label: 'Models & serving', value: 'vLLM · Claude · GPT · local Llama' },
+	{ label: 'Hardware', value: '14″ MacBook Pro · a loud Linux box with a 4090' },
+];
 ---
 
 <Base title="Uses — Anuj Mali">
-	<main style="min-height:100vh; display:flex; align-items:center; padding:88px 44px;">
+	<main style="min-height:100vh; padding:88px 44px 96px;">
 		<div style="max-width:860px; margin:0 auto;">
 			<div style="display:flex; align-items:center; gap:11px; margin-bottom:10px;">
 				<span style="width:9px; height:9px; border-radius:50%; background:#39d3c4; box-shadow:0 0 12px #39d3c4; flex:none;"></span>
 				<h1 transition:name="node-uses" style="margin:0; font-size:34px; font-weight:600; letter-spacing:-.5px; color:#eef1f5;">Uses</h1>
 			</div>
-			<p style="margin:0; font-size:15px; line-height:1.6; color:#828c9b;">The tools behind the work.</p>
+			<p style="margin:0 0 42px; font-size:15px; line-height:1.6; color:#828c9b;">The tools behind the work.</p>
+
+			<div style="display:grid; grid-template-columns:160px 1fr; gap:22px 28px; max-width:620px;">
+				{ROWS.map((row, i) => (
+					<>
+						<div style={`font-size:12.5px; letter-spacing:.5px; text-transform:uppercase; color:#5f6a79; padding-top:2px; ${i > 0 ? 'border-top:1px solid rgba(255,255,255,.06);' : ''}`}>{row.label}</div>
+						<div style={`font-size:15px; line-height:1.7; color:#cbd1da; ${i > 0 ? 'border-top:1px solid rgba(255,255,255,.06); padding-top:22px; margin-top:-22px;' : ''}`}>{row.value}</div>
+					</>
+				))}
+			</div>
 		</div>
 	</main>
 </Base>
