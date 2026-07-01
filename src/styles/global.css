@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  --color-teal-glow: oklch(0.72 0.15 195);
+  --color-nebula-purple: oklch(0.55 0.18 300);
+}
